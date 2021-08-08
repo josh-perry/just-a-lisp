@@ -1,12 +1,11 @@
-﻿using System;
-
-namespace MyLisp
+﻿namespace MyLisp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var interpreter = new Interpreter();
+            interpreter.Repl();
         }
     }
 }
