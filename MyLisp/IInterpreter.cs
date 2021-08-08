@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace MyLisp
 {
     public interface IInterpreter
@@ -8,7 +10,7 @@ namespace MyLisp
 
         string Read();
 
-        string Evaluate(string input);
+        string Evaluate(List<Token> tokens);
 
         void Print(string output);
     }

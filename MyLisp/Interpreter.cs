@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MyLisp
 {
@@ -6,7 +7,10 @@ namespace MyLisp
     {
         public void Run(string input)
         {
-            Print(Evaluate(input));
+            var tokenizer = new Tokenizer(input);
+            var tokens = tokenizer.Tokenize();
+
+            Print(Evaluate(tokens));
         }
 
         public void Repl()
@@ -14,7 +18,11 @@ namespace MyLisp
             while (true)
             {
                 var input = Read();
-                Print(Evaluate(input));
+
+                var tokenizer = new Tokenizer(input);
+                var tokens = tokenizer.Tokenize();
+
+                Print(Evaluate(tokens));
 
                 break;
             }
@@ -26,8 +34,13 @@ namespace MyLisp
             return Console.ReadLine();
         }
 
-        public string Evaluate(string input)
+        public string Evaluate(List<Token> tokens)
         {
+            foreach (var token in tokens)
+            {
+                Console.WriteLine($"Token {token}");
+            }
+
             return "[eval]";
         }
 

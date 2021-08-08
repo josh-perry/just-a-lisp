@@ -40,7 +40,7 @@ namespace MyLisp
             return Input[PeekIndex++];
         }
 
-        private Token<int> TokenizeNumber()
+        private Token TokenizeNumber()
         {
             // Add the character we just read
             var chars = new List<char>
@@ -60,10 +60,10 @@ namespace MyLisp
                 chars.Add(ReadNext());
             }
 
-            return new Token<int>
+            return new Token
             {
                 TokenType = TokenType.Number,
-                Value = int.Parse(new string(chars.ToArray()))
+                Value = new string(chars.ToArray())
             };
         }
 
@@ -80,7 +80,7 @@ namespace MyLisp
 
                 if (SingleCharacterTokens.ContainsKey(c.ToString()))
                 {
-                    tokens.Add(new Token<object>
+                    tokens.Add(new Token
                     {
                         TokenType = SingleCharacterTokens[c.ToString()]
                     });
