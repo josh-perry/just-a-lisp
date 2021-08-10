@@ -1,28 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using MyLisp.Expressions;
 
 namespace MyLisp
 {
-    public abstract class SExp
-    {
-    }
-
-    public class AtomicSExp : SExp
-    {
-        public readonly Token Token;
-
-        public AtomicSExp(Token token)
-        {
-            Token = token;
-        }
-    }
-
-    public class SExpList : SExp
-    {
-        public readonly List<SExp> Expressions = new();
-    }
-
     public class Parser
     {
         public SExp Parse(Queue<Token> tokens)

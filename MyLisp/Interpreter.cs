@@ -1,28 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyLisp.ExpressionResults;
+using MyLisp.Expressions;
 
 namespace MyLisp
 {
-    public abstract class ExpressionResult
-    {
-    }
-
-    public class ExpressionNumberResult : ExpressionResult
-    {
-        public int Result;
-
-        public ExpressionNumberResult(int result)
-        {
-            Result = result;
-        }
-
-        public override string ToString()
-        {
-            return $"NumberResult [{Result}]";
-        }
-    }
-
     public class Interpreter : IInterpreter
     {
         private Parser Parser;
