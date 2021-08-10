@@ -45,6 +45,8 @@ namespace MyLisp
 
         public void Repl()
         {
+            Console.WriteLine("MyLisp");
+
             while (true)
             {
                 var input = Read();
@@ -57,6 +59,8 @@ namespace MyLisp
 
                 Print(Evaluate(Parser.Parse(new Queue<Token>(tokens))));
             }
+
+            Console.WriteLine("Goodbye!");
         }
 
         public string Read()
