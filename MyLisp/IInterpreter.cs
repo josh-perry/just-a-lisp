@@ -4,14 +4,14 @@ namespace MyLisp
 {
     public interface IInterpreter
     {
-        void Run(string input);
+        ExpressionResult Run(string input);
 
         void Repl();
 
         string Read();
 
-        string Evaluate(List<Token> tokens);
+        ExpressionResult Evaluate(SExp expression);
 
-        void Print(string output);
+        void Print(ExpressionResult result);
     }
 }
