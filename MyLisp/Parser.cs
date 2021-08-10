@@ -4,7 +4,7 @@ using MyLisp.Expressions;
 
 namespace MyLisp
 {
-    public class Parser
+    public class Parser : IParser
     {
         public SExp Parse(Queue<Token> tokens)
         {
@@ -28,4 +28,5 @@ namespace MyLisp
             return new AtomicSExp(token);
         }
     }
+
 }

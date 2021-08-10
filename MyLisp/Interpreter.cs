@@ -8,17 +8,19 @@ namespace MyLisp
 {
     public class Interpreter : IInterpreter
     {
-        private Parser Parser;
+        private readonly IParser Parser;
 
-        public Interpreter()
+        private readonly ITokenizer Tokenizer;
+
+        public Interpreter(IParser parser, ITokenizer tokenizer)
         {
-            Parser = new Parser();
+            Parser = parser;
+            Tokenizer = tokenizer;
         }
 
         public ExpressionResult Run(string input)
         {
-            var tokenizer = new Tokenizer();
-            var tokens = tokenizer.Tokenize(input);
+            var tokens = Tokenizer.Tokenize(input);
 
             var result = Evaluate(Parser.Parse(new Queue<Token>(tokens)));
             Print(result);
@@ -37,8 +39,7 @@ namespace MyLisp
                 if (input == "q")
                     break;
 
-                var tokenizer = new Tokenizer();
-                var tokens = tokenizer.Tokenize(input);
+                var tokens = Tokenizer.Tokenize(input);
 
                 Print(Evaluate(Parser.Parse(new Queue<Token>(tokens))));
             }

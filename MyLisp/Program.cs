@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            var interpreter = new Interpreter();
+            var interpreter = new Interpreter(new Parser(), new Tokenizer());
             interpreter.Repl();
         }
     }
