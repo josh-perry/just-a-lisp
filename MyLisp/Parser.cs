@@ -22,11 +22,11 @@ namespace MyLisp
                     newTree.Expressions.Add(Parse(tokens));
                 }
 
+                tokens.Dequeue();
                 return newTree;
             }
 
             return new AtomicSExp(token);
         }
     }
-
 }
