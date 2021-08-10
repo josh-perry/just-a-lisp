@@ -3,10 +3,10 @@ using Xunit;
 
 namespace MyLisp.Test
 {
-    public class EndToEnd
+    public class InterpreterTests
     {
         [Fact]
-        public void EndToEnd_SingleExpression()
+        public void Interpreter_SingleExpression()
         {
             // Arrange
             var interpreter = new Interpreter(new Parser(), new Tokenizer());
@@ -19,7 +19,7 @@ namespace MyLisp.Test
         }
 
         [Fact]
-        public void EndToEnd_NestedExpression()
+        public void Interpreter_NestedExpression()
         {
             // Arrange
             var interpreter = new Interpreter(new Parser(), new Tokenizer());
@@ -32,7 +32,7 @@ namespace MyLisp.Test
         }
 
         [Fact]
-        public void EndToEnd_AddingTwoPositives()
+        public void Interpreter_AddingTwoPositives()
         {
             // Arrange
             var interpreter = new Interpreter(new Parser(), new Tokenizer());
@@ -45,7 +45,7 @@ namespace MyLisp.Test
         }
 
         [Fact]
-        public void EndToEnd_AddingPositiveAndNegative()
+        public void Interpreter_AddingPositiveAndNegative()
         {
             // Arrange
             var interpreter = new Interpreter(new Parser(), new Tokenizer());
@@ -58,7 +58,7 @@ namespace MyLisp.Test
         }
 
         [Fact]
-        public void EndToEnd_AddingPositiveAndNegative_ResultNegative()
+        public void Interpreter_AddingPositiveAndNegative_ResultNegative()
         {
             // Arrange
             var interpreter = new Interpreter(new Parser(), new Tokenizer());
@@ -71,7 +71,7 @@ namespace MyLisp.Test
         }
 
         [Fact]
-        public void EndToEnd_AddingNegativeAndNegative()
+        public void Interpreter_AddingNegativeAndNegative()
         {
             // Arrange
             var interpreter = new Interpreter(new Parser(), new Tokenizer());
