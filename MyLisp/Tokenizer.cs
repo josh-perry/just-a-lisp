@@ -88,7 +88,7 @@ namespace MyLisp
                     continue;
                 }
 
-                if (char.IsNumber(c))
+                if (char.IsNumber(c) || c == '-' || c == '+')
                 {
                     tokens.Add(TokenizeNumber());
                     continue;
