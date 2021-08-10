@@ -7,13 +7,7 @@ namespace MyLisp
     {
         private Dictionary<string, TokenType> SingleCharacterTokens { get; set; }
 
-        private int CurrentIndex { get; set; }
-
-        private int PeekIndex { get; set; }
-
-        private string Input { get; set; }
-
-        public Tokenizer(string input)
+        public Tokenizer()
         {
             SingleCharacterTokens = new Dictionary<string, TokenType>
             {
@@ -21,43 +15,41 @@ namespace MyLisp
                 { ")", TokenType.RightParen },
                 { "+", TokenType.Plus }
             };
-
-            Input = input;
         }
 
-        private char ReadNext()
+        private char ReadNext(TokenizeState state)
         {
-            if (CurrentIndex >= Input.Length)
+            if (state.Index >= state.Input.Length)
             {
                 throw new IndexOutOfRangeException("Reading past the end of input string!");
             }
 
-            return Input[CurrentIndex++];
+            return state.Input[state.Index++];
         }
 
-        private char PeekNext()
+        private char PeekNext(TokenizeState state)
         {
-            return Input[PeekIndex++];
+            return state.Input[state.PeekIndex++];
         }
 
-        private Token TokenizeNumber()
+        private Token TokenizeNumber(TokenizeState state)
         {
             // Add the character we just read
             var chars = new List<char>
             {
-                Input[CurrentIndex - 1]
+                state.Input[state.Index - 1]
             };
 
             while (true)
             {
-                var next = PeekNext();
+                var next = PeekNext(state);
 
                 if (!char.IsNumber(next))
                 {
                     break;
                 }
 
-                chars.Add(ReadNext());
+                chars.Add(ReadNext(state));
             }
 
             return new Token
@@ -67,16 +59,15 @@ namespace MyLisp
             };
         }
 
-        public List<Token> Tokenize()
+        public List<Token> Tokenize(string input)
         {
             var tokens = new List<Token>();
+            var state = new TokenizeState(input);
 
-            CurrentIndex = 0;
-
-            while (CurrentIndex <= Input.Length - 1)
+            while (state.Index <= state.Input.Length - 1)
             {
-                var c = ReadNext();
-                PeekIndex = CurrentIndex;
+                var c = ReadNext(state);
+                state.PeekIndex = state.Index;
 
                 if (SingleCharacterTokens.ContainsKey(c.ToString()))
                 {
@@ -90,12 +81,26 @@ namespace MyLisp
 
                 if (char.IsNumber(c) || c == '-' || c == '+')
                 {
-                    tokens.Add(TokenizeNumber());
+                    tokens.Add(TokenizeNumber(state));
                     continue;
                 }
             }
 
             return tokens;
+        }
+
+        private class TokenizeState
+        {
+            public string Input;
+
+            public int Index = 0;
+
+            public int PeekIndex = 0;
+
+            public TokenizeState(string input)
+            {
+                Input = input;
+            }
         }
     }
 }

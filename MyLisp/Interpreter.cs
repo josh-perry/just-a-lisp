@@ -17,8 +17,8 @@ namespace MyLisp
 
         public ExpressionResult Run(string input)
         {
-            var tokenizer = new Tokenizer(input);
-            var tokens = tokenizer.Tokenize();
+            var tokenizer = new Tokenizer();
+            var tokens = tokenizer.Tokenize(input);
 
             var result = Evaluate(Parser.Parse(new Queue<Token>(tokens)));
             Print(result);
@@ -37,8 +37,8 @@ namespace MyLisp
                 if (input == "q")
                     break;
 
-                var tokenizer = new Tokenizer(input);
-                var tokens = tokenizer.Tokenize();
+                var tokenizer = new Tokenizer();
+                var tokens = tokenizer.Tokenize(input);
 
                 Print(Evaluate(Parser.Parse(new Queue<Token>(tokens))));
             }

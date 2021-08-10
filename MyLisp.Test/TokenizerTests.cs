@@ -8,10 +8,10 @@ namespace MyLisp.Test
         public void Tokenizer_Plus2_2_5Tokens()
         {
             // Arrange
-            var tokenizer = new Tokenizer("(+ 2 2)");
+            var tokenizer = new Tokenizer();
 
             // Act
-            var tokens = tokenizer.Tokenize();
+            var tokens = tokenizer.Tokenize("(+ 2 2)");
 
             // Assert
             Assert.True(tokens.Count == 5);
@@ -28,10 +28,10 @@ namespace MyLisp.Test
         public void Tokenizer_Plus2_99_5Tokens()
         {
             // Arrange
-            var tokenizer = new Tokenizer("(+ 2 99)");
+            var tokenizer = new Tokenizer();
 
             // Act
-            var tokens = tokenizer.Tokenize();
+            var tokens = tokenizer.Tokenize("(+ 2 99)");
 
             // Assert
             Assert.True(tokens.Count == 5);
@@ -48,10 +48,10 @@ namespace MyLisp.Test
         public void Tokenizer_Plus2_Minus3_5Tokens()
         {
             // Arrange
-            var tokenizer = new Tokenizer("(+ 2 -3)");
+            var tokenizer = new Tokenizer();
 
             // Act
-            var tokens = tokenizer.Tokenize();
+            var tokens = tokenizer.Tokenize("(+ 2 -3)");
 
             // Assert
             Assert.True(tokens.Count == 5);

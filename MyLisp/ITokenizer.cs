@@ -4,6 +4,6 @@ namespace MyLisp
 {
     public interface ITokenizer
     {
-        List<Token> Tokenize();
+        List<Token> Tokenize(string input);
     }
 }

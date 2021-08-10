@@ -51,7 +51,7 @@ namespace MyLisp.Test
         [Fact]
         public void Parser_Nested()
         {
-            var tokens = new Tokenizer("(+ 2 (+ 1 1))").Tokenize();
+            var tokens = new Tokenizer().Tokenize("(+ 2 (+1 1))");
             var parser = new Parser();
 
             var sexp = parser.Parse(new Queue<Token>(tokens));
