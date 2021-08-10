@@ -82,5 +82,31 @@ namespace MyLisp.Test
             // Assert
             Assert.True(((ExpressionNumberResult) result).Result == -15);
         }
+
+        [Fact]
+        public void Interpreter_AddingMultipleNested()
+        {
+            // Arrange
+            var interpreter = new Interpreter(new Parser(), new Tokenizer());
+
+            // Act
+            var result = interpreter.Run("(+(+ 1 1) (+ 2 2))");
+
+            // Assert
+            Assert.Equal(6, ((ExpressionNumberResult) result).Result);
+        }
+
+        [Fact]
+        public void Interpreter_AddingNestedLast()
+        {
+            // Arrange
+            var interpreter = new Interpreter(new Parser(), new Tokenizer());
+
+            // Act
+            var result = interpreter.Run("(+(+ 1 1) 1)");
+
+            // Assert
+            Assert.Equal(3, ((ExpressionNumberResult) result).Result);
+        }
     }
 }
