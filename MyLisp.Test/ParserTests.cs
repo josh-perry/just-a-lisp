@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Xunit;
 
@@ -47,6 +46,15 @@ namespace MyLisp.Test
             var sexp = parser.Parse(tokenStack);
 
             // Assert
+        }
+
+        [Fact]
+        public void Parser_Nested()
+        {
+            var tokens = new Tokenizer("(+ 2 (+ 1 1))").Tokenize();
+            var parser = new Parser();
+
+            var sexp = parser.Parse(new Queue<Token>(tokens));
         }
     }
 }
