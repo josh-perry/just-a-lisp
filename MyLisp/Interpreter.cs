@@ -78,6 +78,7 @@ namespace MyLisp
         public ExpressionResult EvaluateExpressionList(SExpList expressionList)
         {
             var firstExpression = expressionList.Expressions.First();
+
             if (firstExpression.GetType() == typeof(AtomicSExp))
             {
                 var expression = firstExpression as AtomicSExp;
@@ -88,7 +89,7 @@ namespace MyLisp
                 }
             }
 
-            return new ExpressionNumberResult(0);
+            throw new Exception("First expression in expression list isn't atomic");
         }
 
         public ExpressionResult EvaluatePlus(SExpList expressionList)
