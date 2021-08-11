@@ -25,6 +25,46 @@ namespace MyLisp.Test
         }
 
         [Fact]
+        public void Tokenizer_Plus2_Minus2_5Tokens()
+        {
+            // Arrange
+            var tokenizer = new Tokenizer();
+
+            // Act
+            var tokens = tokenizer.Tokenize("(+ 2 -2)");
+
+            // Assert
+            Assert.True(tokens.Count == 5);
+            Assert.True(tokens[0].TokenType == TokenType.LeftParen);
+            Assert.True(tokens[1].TokenType == TokenType.Plus);
+            Assert.True(tokens[2].TokenType == TokenType.Number);
+            Assert.True(tokens[2].Value == "2");
+            Assert.True(tokens[3].Value == "-2");
+            Assert.True(tokens[3].TokenType == TokenType.Number);
+            Assert.True(tokens[4].TokenType == TokenType.RightParen);
+        }
+
+        [Fact]
+        public void Tokenizer_Plus2_Plus2_5Tokens()
+        {
+            // Arrange
+            var tokenizer = new Tokenizer();
+
+            // Act
+            var tokens = tokenizer.Tokenize("(+ 2 +2)");
+
+            // Assert
+            Assert.True(tokens.Count == 5);
+            Assert.True(tokens[0].TokenType == TokenType.LeftParen);
+            Assert.True(tokens[1].TokenType == TokenType.Plus);
+            Assert.True(tokens[2].TokenType == TokenType.Number);
+            Assert.True(tokens[2].Value == "2");
+            Assert.True(tokens[3].Value == "+2");
+            Assert.True(tokens[3].TokenType == TokenType.Number);
+            Assert.True(tokens[4].TokenType == TokenType.RightParen);
+        }
+
+        [Fact]
         public void Tokenizer_Plus2_99_5Tokens()
         {
             // Arrange

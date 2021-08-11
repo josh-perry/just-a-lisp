@@ -13,7 +13,10 @@ namespace MyLisp
             {
                 { "(", TokenType.LeftParen },
                 { ")", TokenType.RightParen },
-                { "+", TokenType.Plus }
+                { "+", TokenType.Plus },
+                { "-", TokenType.Minus },
+                { "*", TokenType.Multiply },
+                { "/", TokenType.Divide }
             };
         }
 
@@ -69,6 +72,22 @@ namespace MyLisp
                 var c = ReadNext(state);
                 state.PeekIndex = state.Index;
 
+                if (c == '-' || c == '+')
+                {
+                    if (char.IsNumber(PeekNext(state)))
+                    {
+                        state.PeekIndex = state.Index;
+                        tokens.Add(TokenizeNumber(state));
+                        continue;
+                    }
+                }
+
+                if (char.IsNumber(c))
+                {
+                    tokens.Add(TokenizeNumber(state));
+                    continue;
+                }
+
                 if (SingleCharacterTokens.ContainsKey(c.ToString()))
                 {
                     tokens.Add(new Token
@@ -76,12 +95,6 @@ namespace MyLisp
                         TokenType = SingleCharacterTokens[c.ToString()]
                     });
 
-                    continue;
-                }
-
-                if (char.IsNumber(c) || c == '-' || c == '+')
-                {
-                    tokens.Add(TokenizeNumber(state));
                     continue;
                 }
             }

@@ -5,6 +5,9 @@ namespace MyLisp
         LeftParen,
         RightParen,
         Plus,
-        Number
+        Number,
+        Minus,
+        Multiply,
+        Divide
     }
 }
