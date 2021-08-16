@@ -5,69 +5,35 @@ namespace MyLisp.Test
 {
     public class MinusTests
     {
-        [Fact]
-        public void Minus_SingleExpression()
+        [Theory]
+        [InlineData("(- 8 2)", 6)]
+        [InlineData("(- 100 -30)", 130)]
+        [InlineData("(- -30 100)", -130)]
+        [InlineData("(- -5 -10)", 5)]
+        public void Minus_SingleExpression(string code, int expected)
         {
             // Arrange
             var interpreter = new Interpreter(new Parser(), new Tokenizer());
 
             // Act
-            var result = interpreter.Run("(- 6 2)");
+            var result = interpreter.Run(code);
 
             // Assert
-            Assert.Equal(4, ((ExpressionNumberResult) result).Result);
+            Assert.Equal(expected, ((ExpressionNumberResult) result).Result);
         }
 
-        [Fact]
-        public void Minus_NestedExpression()
+        [Theory]
+        [InlineData("(- 2 (- 80 50))", -28)]
+        public void Minus_NestedExpression(string code, int expected)
         {
             // Arrange
             var interpreter = new Interpreter(new Parser(), new Tokenizer());
 
             // Act
-            var result = interpreter.Run("(- 2 (- 80 50))");
+            var result = interpreter.Run(code);
 
             // Assert
-            Assert.Equal(-28, ((ExpressionNumberResult) result).Result);
-        }
-
-        [Fact]
-        public void Minus_PositiveAndNegative()
-        {
-            // Arrange
-            var interpreter = new Interpreter(new Parser(), new Tokenizer());
-
-            // Act
-            var result = interpreter.Run("(- 100 -30)");
-
-            // Assert
-            Assert.Equal(130, ((ExpressionNumberResult) result).Result);
-        }
-
-        [Fact]
-        public void Minus_NegativeAndPositive()
-        {
-            // Arrange
-            var interpreter = new Interpreter(new Parser(), new Tokenizer());
-
-            // Act
-            var result = interpreter.Run("(- 30 -100)");
-
-            // Assert
-            Assert.Equal(130, ((ExpressionNumberResult) result).Result);
-        }
-
-        [Fact]
-        public void Minus_NegativeAndNegative()
-        {
-            // Arrange
-            var interpreter = new Interpreter(new Parser(), new Tokenizer());
-
-            // Act
-            var result = interpreter.Run("(- -5 -10)");
-
-            // Assert
-            Assert.Equal(5, ((ExpressionNumberResult) result).Result);
+            Assert.Equal(expected, ((ExpressionNumberResult) result).Result);
         }
     }
 }
