@@ -79,6 +79,10 @@ namespace MyLisp
                 {
                     return EvaluateMinus(expressionList);
                 }
+                if (expression.Token.TokenType == TokenType.Multiply)
+                {
+                    return EvaluateMultiply(expressionList);
+                }
             }
 
             throw new Exception("First expression in expression list isn't atomic");
@@ -125,6 +129,33 @@ namespace MyLisp
                 }
 
                 total -= ((ExpressionNumberResult) result).Result;
+            }
+
+            return new ExpressionNumberResult(total);
+        }
+
+        public ExpressionResult EvaluateMultiply(SExpList expressionList)
+        {
+            var total = 0;
+            var first = true;
+
+            foreach (var expression in expressionList.Expressions.Skip(1))
+            {
+                var result = Evaluate(expression);
+
+                if (result.GetType() != typeof(ExpressionNumberResult))
+                {
+                    throw new Exception("Not a numeric result!");
+                }
+
+                if (first)
+                {
+                    first = false;
+                    total = ((ExpressionNumberResult) result).Result;
+                    continue;
+                }
+
+                total *= ((ExpressionNumberResult) result).Result;
             }
 
             return new ExpressionNumberResult(total);
