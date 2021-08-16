@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using MyLisp.ExpressionResults;
 using MyLisp.Expressions;
@@ -71,43 +72,27 @@ namespace MyLisp
             {
                 var expression = firstExpression as AtomicSExp;
 
-                if (expression.Token.TokenType == TokenType.Plus)
+                Debug.Assert(expression != null, nameof(expression) + " != null");
+
+                switch (expression.Token.TokenType)
                 {
-                    return EvaluatePlus(expressionList);
-                }
-                if (expression.Token.TokenType == TokenType.Minus)
-                {
-                    return EvaluateMinus(expressionList);
-                }
-                if (expression.Token.TokenType == TokenType.Multiply)
-                {
-                    return EvaluateMultiply(expressionList);
+                    case TokenType.Plus:
+                        return EvaluateMath(expressionList, TokenType.Plus);
+                    case TokenType.Minus:
+                        return EvaluateMath(expressionList, TokenType.Minus);
+                    case TokenType.Multiply:
+                        return EvaluateMath(expressionList, TokenType.Multiply);
+                    case TokenType.Divide:
+                        return EvaluateMath(expressionList, TokenType.Divide);
+                    default:
+                        throw new ArgumentException("Expected a math operator!");
                 }
             }
 
             throw new Exception("First expression in expression list isn't atomic");
         }
 
-        public ExpressionResult EvaluatePlus(SExpList expressionList)
-        {
-            var total = 0;
-
-            foreach (var expression in expressionList.Expressions.Skip(1))
-            {
-                var result = Evaluate(expression);
-
-                if (result.GetType() != typeof(ExpressionNumberResult))
-                {
-                    throw new Exception("Not a numeric result!");
-                }
-
-                total += ((ExpressionNumberResult) result).Result;
-            }
-
-            return new ExpressionNumberResult(total);
-        }
-
-        public ExpressionResult EvaluateMinus(SExpList expressionList)
+        public ExpressionResult EvaluateMath(SExpList expressionList, TokenType tokenType)
         {
             var total = 0;
             var first = true;
@@ -128,34 +113,21 @@ namespace MyLisp
                     continue;
                 }
 
-                total -= ((ExpressionNumberResult) result).Result;
-            }
-
-            return new ExpressionNumberResult(total);
-        }
-
-        public ExpressionResult EvaluateMultiply(SExpList expressionList)
-        {
-            var total = 0;
-            var first = true;
-
-            foreach (var expression in expressionList.Expressions.Skip(1))
-            {
-                var result = Evaluate(expression);
-
-                if (result.GetType() != typeof(ExpressionNumberResult))
+                switch (tokenType)
                 {
-                    throw new Exception("Not a numeric result!");
+                    case TokenType.Divide:
+                        total /= ((ExpressionNumberResult) result).Result;
+                        break;
+                    case TokenType.Minus:
+                        total -= ((ExpressionNumberResult) result).Result;
+                        break;
+                    case TokenType.Multiply:
+                        total *= ((ExpressionNumberResult) result).Result;
+                        break;
+                    case TokenType.Plus:
+                        total += ((ExpressionNumberResult) result).Result;
+                        break;
                 }
-
-                if (first)
-                {
-                    first = false;
-                    total = ((ExpressionNumberResult) result).Result;
-                    continue;
-                }
-
-                total *= ((ExpressionNumberResult) result).Result;
             }
 
             return new ExpressionNumberResult(total);
